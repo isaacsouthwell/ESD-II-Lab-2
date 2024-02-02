@@ -1,0 +1,30 @@
+%ESD II Lab 1
+%Calculate Depth of Tennis Ball from Provided Centeroid Locations
+
+%Isaac Southwell
+%ESDII 1/26/2024
+
+
+b = 60;
+f = 6;
+ps = 0.006;
+xNumPix = 752;
+cxLeft = xNumPix / 2;
+cxRight = xNumPix / 2;
+disparity_shift = 0:350;
+
+clc;
+xLeft = cxLeft + disparity_shift;
+xRight = cxRight - disparity_shift;
+
+d = (abs((xLeft - cxLeft) - (xRight - cxRight)) * ps);
+Z = ((b * f) ./ d);
+meters = Z ./ 1000;
+
+Fig_disp = figure('Position',get(0,'Screensize'));
+plot(meters, disparity_shift);
+xlabel('depth in meters')
+ylabel('disparity in pixels')
+ylim([0, 200])
+title('Depth vs Disparity')
+saveas(Fig_disp, append('depth_v_disparity.png'))
